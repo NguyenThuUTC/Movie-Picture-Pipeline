@@ -54,9 +54,6 @@ jobs:
           access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           region: us-east-1
-      - name: Run init file
-        run: cd ./setup && init.sh || true
-        working-directory: ./setup
       - name: Build Docker image
         run: |
           cd ./starter/frontend
@@ -74,7 +71,7 @@ jobs:
           docker push ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/frontend:latest
       - name: Kubeconfig Login
         run:
-          aws eks update-kubeconfig --name cluster --region us-east-1
+          aws eks update-kubeconfig --name cluster-pro4 --region us-east-1
       # 3.c.ii Apply the Kubernets manfiests using the image tag above
       - name: Deploy to Kubernetes
         run:
