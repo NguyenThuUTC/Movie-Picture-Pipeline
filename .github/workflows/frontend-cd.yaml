@@ -41,6 +41,12 @@ jobs:
     needs: install-build
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Node.js 
+        uses: actions/setup-node@v3
+        with:
+          node-version: latest
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
