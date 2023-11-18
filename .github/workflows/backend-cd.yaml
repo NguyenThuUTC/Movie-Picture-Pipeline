@@ -66,19 +66,17 @@ jobs:
       - name: Build Docker image
         run: |
           cd ./starter/backend
-          echo ${{ vars.REACT_APP_MOVIE_API_URL }}
-          
           docker build -t backend .
       # 3.b.ii Tag the built docker image
       - name: Tag Docker Image
         run:
           cd ./starter/backend && 
-          docker tag backend:latest ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/backend:latest
+          docker tag backend:${GITHUB_SHA} ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/backend:${GITHUB_SHA}
       # 3.c.i Push the image to ERC
       - name: Push Docker image to ECR
         run:
           cd ./starter/backend && 
-          docker push ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/backend:latest
+          docker push ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/backend:${GITHUB_SHA}
       - name: Kubeconfig Login
         run:
           aws eks update-kubeconfig --name cluster-pro4 --region us-east-1
@@ -86,5 +84,5 @@ jobs:
       - name: Deploy to Kubernetes
         run:
           cd ./starter/backend/k8s &&
-          kustomize edit set image backend=${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/backend:latest &&
+          kustomize edit set image backend=${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/backend:${GITHUB_SHA} &&
           kustomize build | kubectl apply -f -

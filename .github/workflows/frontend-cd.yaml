@@ -69,12 +69,12 @@ jobs:
       - name: Tag Docker Image
         run:
           cd ./starter/frontend && 
-          docker tag frontend:latest ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/frontend:latest
+          docker tag frontend:${GITHUB_SHA} ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/frontend:${GITHUB_SHA}
       # 3.c.i Push the image to ERC
       - name: Push Docker image to ECR
         run:
           cd ./starter/frontend && 
-          docker push ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/frontend:latest
+          docker push ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/frontend:${GITHUB_SHA}
       - name: Kubeconfig Login
         run:
           aws eks update-kubeconfig --name cluster-pro4 --region us-east-1
@@ -82,5 +82,5 @@ jobs:
       - name: Deploy to Kubernetes
         run:
           cd ./starter/frontend/k8s &&
-          kustomize edit set image frontend=${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/frontend:latest &&
+          kustomize edit set image frontend=${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/frontend:${GITHUB_SHA} &&
           kustomize build | kubectl apply -f -
