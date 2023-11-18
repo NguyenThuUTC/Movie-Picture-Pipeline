@@ -42,7 +42,7 @@ jobs:
       - name: Run test
         run: cd ./starter/backend && pipenv run test
 
-  backend-deploy:
+  bkend-deploy:
     runs-on: ubuntu-latest
     needs: install-build
 
@@ -68,7 +68,7 @@ jobs:
       - name: Tag Docker Image
         run:
           cd ./starter/backend && 
-          docker tag backend:latest ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/backend:latest && 
+          docker tag backend:latest ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/backend:latest
       # 3.c.i Push the image to ERC
       - name: Push Docker image to ECR
         run:
