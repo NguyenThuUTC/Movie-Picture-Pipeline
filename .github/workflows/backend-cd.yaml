@@ -66,7 +66,7 @@ jobs:
       - name: Build Docker image
         run: |
           cd ./starter/backend
-          docker build -t backend .
+          docker build -t backend:${GITHUB_SHA} .
       # 3.b.ii Tag the built docker image
       - name: Tag Docker Image
         run:
