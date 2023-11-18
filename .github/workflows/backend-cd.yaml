@@ -32,15 +32,15 @@ jobs:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
-    - name: Install, Build
-      run:
-        cd ./starter/backend &&
-        python -m pip install --upgrade pip &&
-        pip install pipenv && 
-        pipenv install pytest --dev && 
-        pipenv install --dev
-    - name: Run test
-      run: cd ./starter/backend && pipenv run test
+      - name: Install, Build
+        run:
+          cd ./starter/backend &&
+          python -m pip install --upgrade pip &&
+          pip install pipenv && 
+          pipenv install pytest --dev && 
+          pipenv install --dev
+      - name: Run test
+        run: cd ./starter/backend && pipenv run test
 
   backend-deploy:
     runs-on: ubuntu-latest
