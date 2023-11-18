@@ -64,7 +64,7 @@ jobs:
         run: |
           cd ./starter/frontend
           echo ${{ vars.REACT_APP_MOVIE_API_URL }}
-          docker build -t frontend .
+          docker build -t frontend:${GITHUB_SHA} .
       # 3.b.ii Tag the built docker image
       - name: Tag Docker Image
         run:
