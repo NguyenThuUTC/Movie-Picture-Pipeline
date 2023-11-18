@@ -56,7 +56,7 @@ jobs:
       - name: Install dependencies
         run: cd ./starter/frontend && npm install && npm ci
       - name: Run test
-        run: cd ./starter/frontend && npm test
+        run: cd ./starter/frontend && npm run test
 
 
   build-job:
