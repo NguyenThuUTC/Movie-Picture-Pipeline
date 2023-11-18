@@ -55,7 +55,7 @@ jobs:
           secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           region: us-east-1
       - name: Run init file
-        run: ./init.sh || true
+        run: cd ./setup && init.sh || true
         working-directory: ./setup
       - name: Build Docker image
         run: |
