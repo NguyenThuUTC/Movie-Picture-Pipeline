@@ -55,8 +55,9 @@ jobs:
           secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           region: us-east-1
       - name: Build Docker image
-        run:
-          cd ./starter/frontend && 
+        run: |
+          cd ./starter/frontend
+          echo ${{ vars.REACT_APP_MOVIE_API_URL }}
           docker build -t frontend --build-arg=REACT_APP_MOVIE_API_URL=${{ vars.REACT_APP_MOVIE_API_URL }} .
       # 3.b.ii Tag the built docker image
       - name: Tag Docker Image
